@@ -115,6 +115,7 @@ public class ChessEngine {
                 int moveResultingScore = leastFavourableEval(tempGameController, depth - 1, alpha, beta);
                 boolean minimaxEvalCondition = (color == WHITE) ? (moveResultingScore > currentEval) : (moveResultingScore < currentEval);
 
+                // Update alpha and beta parameters
                 if (color == WHITE) {
                     alpha = Math.max(alpha, moveResultingScore);
                 } else {
@@ -184,19 +185,14 @@ public class ChessEngine {
                     currentEval = Math.min(currentEval, leastFavourableEval(tempGameController, depth - 1, alpha, beta));
                 }
 
-                // Update alpha and beta parameters depending on who is playing
+                // Update alpha and beta parameters
                 if (color == WHITE) {
                     alpha = Math.max(alpha, currentEval);
-                    // System.out.println("ALPHA ASSIGNED: " + String.valueOf(alpha));
                 } else {
                     beta = Math.min(beta, currentEval);
-                    // System.out.println("BETA ASSIGNED: " + String.valueOf(beta));
                 }
 
-                if (beta <= alpha) {
-                    // System.out.println("Broke early from alpha beta pruning!");
-                    break;
-                }
+                if (beta <= alpha) break;
             }
         }
 
